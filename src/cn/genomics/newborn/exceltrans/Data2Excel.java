@@ -122,10 +122,11 @@ public class Data2Excel {
 		System.out.println();
 		System.out.println("Data2Excel version 0.2");
 		System.out.println("Author: huangzhibo@genomics.cn");
-		System.out.println("Note  : Tools for transform plaintext file into Excelfile(.xlsx)");
-		System.out.println("		Please ensure your java(JDK) version is later than 1.6.0.18");
+		System.out.println("Data  : 2015-7-2");
+		System.out.println("Note  : Tools for transform plain text file into Excelfile(.xlsx)");
+		System.out.println("        Please ensure your java(JDK) version is later than 1.6.0.18");
 		System.out.println();
-		System.out.println("Usage : Data2Excel <options...>");
+		System.out.println("Usage : java -jar Data2Excel_v0.2.jar <options...>");
 		System.out.println("\t-i, --infile      \t<String>\tInput plain text files. Support multiple files input(example：\"-i file1 -i file2\"). [required]");
 		System.out.println("\t-o, --outfile     \t<String>\tOutput Excel file, multi input will be writed into different sheets in the same workbook. [infile.xlsx]");
 		System.out.println("\t-s, --sheet_name  \t<String>\tTo set sheet name. When have more than one files, you need use it as \"-s name1,name2\". [no]");
