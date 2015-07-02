@@ -180,6 +180,7 @@ public class Data2Excel {
 		if(formatfile != null) format = myData.readFormatSet(formatfile);
 		short[] groupRegionList = new short[100];
 		short[] groupRegion = new short[]{-1,-1};
+		short[] groupRegionLevel = new short[]{-1,-1};
 		int regionIndex = 0;
 		for(int j=0;j<header.length;j++)
 		{
@@ -205,15 +206,38 @@ public class Data2Excel {
 					groupRegion[1] = (short)j;
 				}
 			}
+			
+			//level 
+			if(format.get('"'+header[j]+'"')[2] == 2 )
+			{
+				if(groupRegionLevel[1]==-1){
+					if(groupRegionLevel[0] == -1) groupRegionLevel[0] = (short)j; 
+					else groupRegionLevel[1] = (short)j;
+				}
+				else if((j-groupRegionLevel[1]) == 1){
+					groupRegionLevel[1] = (short)j;
+				}
+				else{
+					groupRegionList[regionIndex++] = groupRegionLevel[0];
+					groupRegionList[regionIndex++] = groupRegionLevel[1];
+					groupRegionLevel[0] = (short)j;
+					groupRegionLevel[1] = (short)j;
+				}
+			}
+			
 		}
 		if(groupRegion[1] != -1){
 			groupRegionList[regionIndex++] = groupRegion[0];
 			groupRegionList[regionIndex++] = groupRegion[1];
 		}
+		if(groupRegionLevel[1] != -1){
+			groupRegionList[regionIndex++] = groupRegionLevel[0];
+			groupRegionList[regionIndex++] = groupRegionLevel[1];
+		}
 		
 		for(int k=0;k<regionIndex;k+=2)
 		{
-			System.out.println(groupRegionList[k]+"\t"+groupRegionList[k+1]);
+//			System.out.println(groupRegionList[k]+"\t"+groupRegionList[k+1]);
 			sheet.groupColumn(groupRegionList[k], groupRegionList[k+1]);
 //			sheet.setColumnGroupCollapsed((short)0, false);
 		}
@@ -259,7 +283,7 @@ public class Data2Excel {
 			else
 				outLine2Row(lineArr, row, textStyle);
 		}
-		if(hasHeader || formatfile != null)		
+		if(hasHeader && formatfile != null)		
 			setColumnFormat(sheet,header,myData);
 		
 	}
@@ -310,7 +334,7 @@ public class Data2Excel {
 			
 		}
 		
-		if(hasHeader || formatfile != null) 		
+		if(hasHeader && formatfile != null) 		
 			setColumnFormat(sheet,header,myData);
 //		else{
 //			for(int j=0;j<myData.max_col;j++)
