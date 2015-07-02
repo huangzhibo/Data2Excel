@@ -17,7 +17,7 @@ public class ReadText {
 	
 	int max_line = 0;
 	int max_col = 0; 
-	int[] col_width = new int[100];
+	int min_col = GlobleDefined.getMaxColumn();
 
 	public Iterator<String> readDataToLineStr(String filename) {
 		List<String> data = new ArrayList<String>();
@@ -40,11 +40,11 @@ public class ReadText {
 				max_line++;
 				
 				String[] strArray = str.split("\t");
-				for(int j=0;j<strArray.length;j++)
-				{
-					col_width[j] = strArray[j].length();
-					
-				}
+//				for(int j=0;j<strArray.length;j++)
+//				{
+//					col_width[j] = strArray[j].length();
+//					
+//				}
 				
 				max_col = max_col < strArray.length ? strArray.length : max_col;
 			}
@@ -80,12 +80,13 @@ public class ReadText {
 				line.trim();
 				String[] strArray = line.split("\t");
 				data.add(strArray);
-				for(int j=0;j<strArray.length;j++)
-				{
-					col_width[j] = strArray[j].length();
-				}
+//				for(int j=0;j<strArray.length;j++)
+//				{
+//					col_width[j] = strArray[j].length();
+//				}
 				
 				max_col = max_col < strArray.length ? strArray.length : max_col;
+				min_col = min_col > strArray.length ? strArray.length : max_col;
 				max_line++;
 			}
 			bufferReader.close();
@@ -100,8 +101,8 @@ public class ReadText {
 
 	}
 	
-	public Map <String,String[]> readFormatSet(String filename) {
-		Map <String,String[]> format = new HashMap <String,String[]>();
+	public Map <String,int[]> readFormatSet(String filename) {
+		Map <String,int[]> format = new HashMap <String,int[]>();
 		try {
 			File file = new File(filename);
 			FileInputStream inputStream = new FileInputStream(file);
@@ -120,7 +121,12 @@ public class ReadText {
 				if (str.startsWith("#"))
 					continue;
 				String[] strArray  = str.split("\t");
-				format.put(strArray[0], strArray);
+				int numArray[] = new int[strArray.length];  
+				for(int i=1;i<strArray.length;i++){  
+				    numArray[i-1]=Integer.parseInt(strArray[i]);
+				}
+				format.put(strArray[0], numArray);
+//				System.out.println(strArray[0]);
 			}
 			bufferReader.close();
 
