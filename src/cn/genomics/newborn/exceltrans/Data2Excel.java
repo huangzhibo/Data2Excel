@@ -41,7 +41,7 @@ public class Data2Excel {
 		 int c , in_excel = -2 ,infile_num = 0;
     	 String arg, outfile = null, sheet_name = null;
     	 String[] infiles = new String[10];
-		 Getopt g = new Getopt("Data2Excel", args, "-:i:o:f:s:c:e:h:t::", longopts);
+		 Getopt g = new Getopt("Data2Excel", args, "-:i:o:f:s:c:e::h:t::", longopts);
 		 if(args.length ==0)	usage();
 		 
 		 while ((c = g.getopt()) != -1)
@@ -96,6 +96,7 @@ public class Data2Excel {
 		
 		for(int n = 0;infiles[n]!=null;n++)
 		{
+			System.out.println(infiles[n]+"\t"+"...writing...");
 			XSSFSheet sheet;
 			if(sheet_name != null && sheetNameArr[n] != null)
 			{
@@ -104,7 +105,6 @@ public class Data2Excel {
 			{
 				sheet = wb.createSheet();
 			}
-			System.out.println(infiles[n]);
 //			sheet.setDefaultRowHeight((short)(1.2*256));
 			if(in_excel == -2)
 				writeToSheet(sheet,infiles[n],headerStyle, textStyle);
@@ -122,17 +122,17 @@ public class Data2Excel {
 		System.out.println();
 		System.out.println("Data2Excel version 0.2");
 		System.out.println("Author: huangzhibo@genomics.cn");
-		System.out.println("Data  : 2015-7-2");
+		System.out.println("Date  : 2015-7-2");
 		System.out.println("Note  : Tools for transform plain text file into Excelfile(.xlsx)");
-		System.out.println("        Please ensure your java(JDK) version is later than 1.6.0.18");
+		System.out.println("        Please ensure your java(JDK) version is 1.8.0 or later");
 		System.out.println();
 		System.out.println("Usage : java -jar Data2Excel_v0.2.jar <options...>");
-		System.out.println("\t-i, --infile      \t<String>\tInput plain text files. Support multiple files input(example：\"-i file1 -i file2\"). [required]");
-		System.out.println("\t-o, --outfile     \t<String>\tOutput Excel file, multi input will be writed into different sheets in the same workbook. [infile.xlsx]");
+		System.out.println("\t-i, --infile      \t<File>  \tInput plain text files. Support multiple files input(example：\"-i file1 -i file2\"). [required]");
+		System.out.println("\t-o, --outfile     \t<File>  \tOutput Excel file, multi input will be writed into different sheets in the same workbook. [file1.xlsx]");
+		System.out.println("\t-f, --format      \t<File>  \tThe format file to set sheet column style. [no]");
 		System.out.println("\t-s, --sheet_name  \t<String>\tTo set sheet name. When have more than one files, you need use it as \"-s name1,name2\". [no]");
-		System.out.println("\t-f, --format      \t<String>\tThe format file to set sheet column style. [no]");
 		System.out.println("\t-c, --no_color    \t        \tTo close the color display in the output file. [no]");
-		System.out.println("\t-e, --in_excel_col\t<int>   \tIn_Excel column index (0-base). Use '--in_excel_col' without argument will check 'In_Excel' in header line. [no]");
+		System.out.println("\t-e, --in_excel_col\t<int>   \tIn_Excel column index (0-base). Use it without argument will check 'In_Excel' in header line. [no]");
 		System.out.println("\t-h, --help        \t        \tPrint this help.");
 		System.out.println();
 		System.exit(0);
