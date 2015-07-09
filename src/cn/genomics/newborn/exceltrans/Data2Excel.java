@@ -41,7 +41,7 @@ public class Data2Excel {
 		 int c , in_excel = -2 ,infile_num = 0;
     	 String arg, outfile = null, sheet_name = null;
     	 String[] infiles = new String[10];
-		 Getopt g = new Getopt("Data2Excel", args, "-:i:o:f:s:c:e::h:t::", longopts);
+		 Getopt g = new Getopt("Data2Excel", args, "-:i:o:f:s:c:e::ht::", longopts);
 		 if(args.length ==0)	usage();
 		 
 		 while ((c = g.getopt()) != -1)
