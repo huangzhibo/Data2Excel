@@ -41,7 +41,7 @@ public class Data2Excel {
 		 int c , in_excel = -2 ,infile_num = 0;
     	 String arg, outfile = null, sheet_name = null;
     	 String[] infiles = new String[10];
-		 Getopt g = new Getopt("Data2Excel", args, "-:i:o:f:s:c:e::ht::", longopts);
+		 Getopt g = new Getopt("Data2Excel", args, "-:i:o:f:s:e::ch", longopts);
 		 if(args.length ==0)	usage();
 		 
 		 while ((c = g.getopt()) != -1)
@@ -59,10 +59,6 @@ public class Data2Excel {
 				 case 'e':
 					 if(g.getOptarg() == null) in_excel = -1;
 					 else in_excel = Integer.parseInt(g.getOptarg());break;
-				 case 't':
-					 arg = g.getOptarg();
-					 System.out.print("You picked " + (char)c + " with an argument of "+((arg != null) ? arg : "null") + "\n");
-					 break;
 				 case 'c':
 					 no_color = true;break;
 				 case 'h':
@@ -70,7 +66,14 @@ public class Data2Excel {
 			 }			 
 		 }
 		 
-		if(infiles.length == 0) usage();
+		if(infiles.length == 0 || infiles[0] == null) usage();
+		if(infiles[0].endsWith(".xlsx"))
+		{
+			ReadXLSX 
+			
+		}
+		
+		
 		if(outfile == null)  outfile = infiles[0]+".xlsx";
 		else if(!outfile.endsWith(".xlsx"))	 outfile = outfile+".xlsx";
 		
@@ -109,7 +112,7 @@ public class Data2Excel {
 			if(in_excel == -2)
 				writeToSheet(sheet,infiles[n],headerStyle, textStyle);
 			else if(-1 == writeToSheet(sheet,infiles[n],headerStyle, textStyle,in_excel))
-					writeToSheet(sheet,infiles[n],headerStyle, textStyle);
+				writeToSheet(sheet,infiles[n],headerStyle, textStyle);
 			
 		}
 		FileOutputStream fileOut = new FileOutputStream(outfile);
