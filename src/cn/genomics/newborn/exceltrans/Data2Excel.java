@@ -3,6 +3,8 @@ package cn.genomics.newborn.exceltrans;
 import gnu.getopt.Getopt;
 import gnu.getopt.LongOpt;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,7 +41,7 @@ public class Data2Excel {
 		
 
 		 int c , in_excel = -2 ,infile_num = 0;
-    	 String arg, outfile = null, sheet_name = null;
+    	 String outfile = null, sheet_name = null;
     	 String[] infiles = new String[10];
 		 Getopt g = new Getopt("Data2Excel", args, "-:i:o:f:s:e::ch", longopts);
 		 if(args.length ==0)	usage();
@@ -69,8 +71,9 @@ public class Data2Excel {
 		if(infiles.length == 0 || infiles[0] == null) usage();
 		if(infiles[0].endsWith(".xlsx"))
 		{
-			ReadXLSX 
-			
+			ReadXLSX excelfile = new ReadXLSX();
+			excelfile.readExcel(new FileInputStream(new File(infiles[0])));
+			System.exit(0);			
 		}
 		
 		
