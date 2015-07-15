@@ -3,23 +3,23 @@ package cn.genomics.newborn.exceltrans;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ReadXLSX {
+public class ReadXLS {
 	
-    private XSSFWorkbook wb;
+    private HSSFWorkbook wb;
 	
 	public void readExcel(InputStream is) {
         try {
-            wb = new XSSFWorkbook(is);
+            wb = new HSSFWorkbook(is);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        XSSFSheet sheet_tmp;
+        HSSFSheet sheet_tmp;
         System.err.println("Sheet Name of this workbook, only print the first sheet by default.");
         for (int i = 0; i <wb.getNumberOfSheets(); i++)
         {
@@ -33,7 +33,7 @@ public class ReadXLSX {
     	
 	}
 	
-	public void printRow(XSSFSheet sheet){
+	public void printRow(HSSFSheet sheet){
 		for (Row row :sheet)
     	{
     		for (Cell cell :row)

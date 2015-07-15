@@ -74,6 +74,10 @@ public class Data2Excel {
 			ReadXLSX excelfile = new ReadXLSX();
 			excelfile.readExcel(new FileInputStream(new File(infiles[0])));
 			System.exit(0);			
+		}else if(infiles[0].endsWith(".xls")){
+			ReadXLS xlsfile = new ReadXLS();
+			xlsfile.readExcel(new FileInputStream(new File(infiles[0])));
+			System.exit(0);
 		}
 		
 		
