@@ -146,10 +146,10 @@ public class Data2Excel {
 		System.out.println("\t-o, --outfile     \t<File>  \tOutput Excel file, multi input will be writed into different sheets in the same workbook. [file1.xlsx]");
 		System.out.println("\t-f, --format      \t<File>  \tThe format file to set sheet column style. [not using]");
 		System.out.println("\t-s, --sheet_name  \t<String>\tTo set sheet name. When have more than one files, you need use it as \"-s name1,name2\". [not using]");
+		System.out.println("\t-F, --split       \t<String>\tSplit char. (example: ' -F \"\\t\" ') [\\t]");
 		System.out.println("\t-c, --no_color    \t        \tTo close the color display in the output file. [not using]");
 		System.out.println("\t-e, --in_excel_col\t<int>   \tIn_Excel column index (0-base). Use it without argument will check 'In_Excel' in header line. [not using]");
 		System.out.println("\t-p, --print_sheet \t<int>   \tSheet index(0-base) to print. Effective when the input is excel file. [print sheet name]");
-		System.out.println("\t-F, --split       \t<int>   \tSplit char. (example: '-F \"\\t\"') [\\t]");
 		System.out.println("\t-h, --help        \t        \tPrint this help.");
 		System.out.println();
 		System.exit(0);
