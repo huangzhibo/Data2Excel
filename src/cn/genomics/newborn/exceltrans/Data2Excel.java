@@ -38,12 +38,14 @@ public class Data2Excel {
 		longopts[4] = new LongOpt("no_color", LongOpt.NO_ARGUMENT, null, 'c');
 		longopts[5] = new LongOpt("sheet_name", LongOpt.REQUIRED_ARGUMENT, null, 's');
 		longopts[6] = new LongOpt("format", LongOpt.REQUIRED_ARGUMENT, null, 'f');
+		longopts[7] = new LongOpt("print_sheet", LongOpt.REQUIRED_ARGUMENT, null, 'p');
+		longopts[8] = new LongOpt("split", LongOpt.REQUIRED_ARGUMENT, null, 'F');
 		
 
-		 int c , in_excel = -2 ,infile_num = 0;
+		 int c , in_excel = -2 ,infile_num = 0, sheetIndexToPrint = -1;
     	 String outfile = null, sheet_name = null;
     	 String[] infiles = new String[10];
-		 Getopt g = new Getopt("Data2Excel", args, "-:i:o:f:s:e::ch", longopts);
+		 Getopt g = new Getopt("Data2Excel", args, "-:i:o:f:s:e::p:F:ch", longopts);
 		 if(args.length ==0)	usage();
 		 
 		 while ((c = g.getopt()) != -1)
@@ -58,6 +60,10 @@ public class Data2Excel {
 					 formatfile = g.getOptarg();break;
 				 case 's':
 					 sheet_name = g.getOptarg();break;
+				 case 'p':
+					 sheetIndexToPrint = Integer.parseInt(g.getOptarg());break;
+				 case 'F':
+					 GlobleDefined.setSplitChar(g.getOptarg());break;
 				 case 'e':
 					 if(g.getOptarg() == null) in_excel = -1;
 					 else in_excel = Integer.parseInt(g.getOptarg());break;
@@ -69,14 +75,14 @@ public class Data2Excel {
 		 }
 		 
 		if(infiles.length == 0 || infiles[0] == null) usage();
-		if(infiles[0].endsWith(".xlsx"))
+		if(infiles[0].endsWith(".xlsx") || infiles[0].endsWith(".xlsm"))
 		{
 			ReadXLSX excelfile = new ReadXLSX();
-			excelfile.readExcel(new FileInputStream(new File(infiles[0])));
+			excelfile.readExcel(new FileInputStream(new File(infiles[0])),sheetIndexToPrint);
 			System.exit(0);			
 		}else if(infiles[0].endsWith(".xls")){
 			ReadXLS xlsfile = new ReadXLS();
-			xlsfile.readExcel(new FileInputStream(new File(infiles[0])));
+			xlsfile.readExcel(new FileInputStream(new File(infiles[0])),sheetIndexToPrint);
 			System.exit(0);
 		}
 		
@@ -130,11 +136,10 @@ public class Data2Excel {
 	
 	private static void usage() {
 		System.out.println();
-		System.out.println("Data2Excel version 0.2");
+		System.out.println("Data2Excel version 0.3");
 		System.out.println("Author: huangzhibo@genomics.cn");
-		System.out.println("Date  : 2015-7-2");
+		System.out.println("Date  : 2015-7-16");
 		System.out.println("Note  : Tools for transform plain text file into Excelfile(.xlsx)");
-		System.out.println("        Please ensure your java(JDK) version is 1.8.0 or later");
 		System.out.println();
 		System.out.println("Usage : java -jar Data2Excel_v0.2.jar <options...>");
 		System.out.println("\t-i, --infile      \t<File>  \tInput plain text files. Support multiple files input(example：\"-i file1 -i file2\"). [required]");
@@ -143,6 +148,8 @@ public class Data2Excel {
 		System.out.println("\t-s, --sheet_name  \t<String>\tTo set sheet name. When have more than one files, you need use it as \"-s name1,name2\". [not using]");
 		System.out.println("\t-c, --no_color    \t        \tTo close the color display in the output file. [not using]");
 		System.out.println("\t-e, --in_excel_col\t<int>   \tIn_Excel column index (0-base). Use it without argument will check 'In_Excel' in header line. [not using]");
+		System.out.println("\t-p, --print_sheet \t<int>   \tSheet index(0-base) to print. Effective when the input is excel file. [print sheet name]");
+		System.out.println("\t-F, --split       \t<int>   \tSplit char. (example: '-F \"\t\"') [\t]");
 		System.out.println("\t-h, --help        \t        \tPrint this help.");
 		System.out.println();
 		System.exit(0);

@@ -13,14 +13,14 @@ public class ReadXLS {
 	
     private HSSFWorkbook wb;
 	
-	public void readExcel(InputStream is) {
+	public void readExcel(InputStream is, int sheetIndexToPrint) {
         try {
             wb = new HSSFWorkbook(is);
         } catch (IOException e) {
             e.printStackTrace();
         }
         HSSFSheet sheet_tmp;
-        System.err.println("Sheet Name of this workbook, only print the first sheet by default.");
+        System.err.println("Use parameter -S,--sheet_index to print contents of one sheet. Sheet Name of this workbook:");
         for (int i = 0; i <wb.getNumberOfSheets(); i++)
         {
         	sheet_tmp = wb.getSheetAt(i);
@@ -28,8 +28,9 @@ public class ReadXLS {
         }
         System.err.println();
         System.err.println();
-        
-        printRow(wb.getSheetAt(0));
+        if(sheetIndexToPrint!=-1){
+        	printRow(wb.getSheetAt(sheetIndexToPrint));
+        }
     	
 	}
 	
