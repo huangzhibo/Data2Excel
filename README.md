@@ -13,10 +13,9 @@ Usage : java -jar Data2Excel_v0.2.jar <options...>
 	-o, --outfile     	<File>  	Output Excel file, multi input will be writed into different sheets in the same workbook. [file1.xlsx]
 	-f, --format      	<File>  	The format file to set sheet column style. [not using]
 	-s, --sheet_name  	<String>	To set sheet name. When have more than one files, you need use it as "-s name1,name2". [not using]
+	-F, --split       	<String>	Split char. (example: ' -F "\t" ') [\t]
 	-c, --no_color    	        	To close the color display in the output file. [not using]
 	-e, --in_excel_col	<int>   	In_Excel column index (0-base). Use it without argument will check 'In_Excel' in header line. [not using]
 	-p, --print_sheet 	<int>   	Sheet index(0-base) to print. Effective when the input is excel file. [print sheet name]
-	-F, --split       	<int>   	Split char. (example: '-F "\t"') [\t]
 	-h, --help        	        	Print this help.
-
 
