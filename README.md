@@ -7,7 +7,7 @@ Author: huangzhibo@genomics.cn
 Data  : 2015-7-16  
 Note  : Tools for transform plain text file into Excelfile(.xlsx)    
 
-Usage : java -jar Data2Excel_v0.2.jar <options...>  
+Usage : java -jar Data2Excel.jar \<options...\>  
 
 	-i, --infile      	<File>  	Input plain text files. Support multiple files input(example："-i file1 -i file2"). [required]
 	-o, --outfile     	<File>  	Output Excel file, multi input will be writed into different sheets in the same workbook. [file1.xlsx]
