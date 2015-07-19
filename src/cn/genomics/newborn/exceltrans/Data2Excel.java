@@ -141,7 +141,7 @@ public class Data2Excel {
 		System.out.println("Date  : 2015-7-16");
 		System.out.println("Note  : Tools for transform plain text file into Excelfile(.xlsx)");
 		System.out.println();
-		System.out.println("Usage : java -jar Data2Excel_v0.2.jar <options...>");
+		System.out.println("Usage : java -jar Data2Excel_v0.3.jar <options...>");
 		System.out.println("\t-i, --infile      \t<File>  \tInput plain text files. Support multiple files input(example：\"-i file1 -i file2\"). [required]");
 		System.out.println("\t-o, --outfile     \t<File>  \tOutput Excel file, multi input will be writed into different sheets in the same workbook. [file1.xlsx]");
 		System.out.println("\t-f, --format      \t<File>  \tThe format file to set sheet column style. [not using]");
@@ -149,7 +149,7 @@ public class Data2Excel {
 		System.out.println("\t-F, --split       \t<String>\tSplit char. (example: ' -F \"\\t\" ') [\\t]");
 		System.out.println("\t-c, --no_color    \t        \tTo close the color display in the output file. [not using]");
 		System.out.println("\t-e, --in_excel_col\t<int>   \tIn_Excel column index (0-base). Use it without argument will check 'In_Excel' in header line. [not using]");
-		System.out.println("\t-p, --print_sheet \t<int>   \tSheet index(0-base) to print. Effective when the input is excel file. [print sheet name]");
+		System.out.println("\t-p, --print_sheet \t<int>   \tThe index(0-base) of Sheet to print. Be effective when the input is excel file. [print sheet name]");
 		System.out.println("\t-h, --help        \t        \tPrint this help.");
 		System.out.println();
 		System.exit(0);

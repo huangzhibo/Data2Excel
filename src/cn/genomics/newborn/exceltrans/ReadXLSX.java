@@ -20,13 +20,13 @@ public class ReadXLSX {
             e.printStackTrace();
         }
         XSSFSheet sheet_tmp;
+        System.err.println();
         System.err.println("Use parameter -S,--sheet_index to print contents of one sheet. Sheet Name of this workbook:");
         for (int i = 0; i <wb.getNumberOfSheets(); i++)
         {
         	sheet_tmp = wb.getSheetAt(i);
         	System.err.print(i+". "+sheet_tmp.getSheetName()+"\t");
         }
-        System.err.println();
         System.err.println();
         
         if(sheetIndexToPrint!=-1){
