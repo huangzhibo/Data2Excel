@@ -21,7 +21,7 @@ public class ReadXLS {
         }
         HSSFSheet sheet_tmp;
         System.err.println();
-        System.err.println("Use parameter -S,--sheet_index to print contents of one sheet. Sheet Name of this workbook:");
+        System.err.println("Use parameter -p,--print_sheet to print contents of one sheet. Sheet Name of this workbook:");
         for (int i = 0; i <wb.getNumberOfSheets(); i++)
         {
         	sheet_tmp = wb.getSheetAt(i);
