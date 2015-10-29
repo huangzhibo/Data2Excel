@@ -44,7 +44,7 @@ public class Data2Excel {
 
 		 int c , in_excel = -2 ,infile_num = 0, sheetIndexToPrint = -1;
     	 String outfile = null, sheet_name = null;
-    	 String[] infiles = new String[10];
+    	 String[] infiles = new String[20];
 		 Getopt g = new Getopt("Data2Excel", args, "-:i:o:f:s:e::p:F:ch", longopts);
 		 if(args.length ==0)	usage();
 		 
@@ -104,7 +104,7 @@ public class Data2Excel {
 		headerStyle.setFont(headerFont);
 		
 		//set sheet name
-		String[] sheetNameArr = new String[10];
+		String[] sheetNameArr = new String[20];
 		if(sheet_name != null)
 		{
 			sheetNameArr = sheet_name.split(",");
@@ -112,7 +112,7 @@ public class Data2Excel {
 		
 		for(int n = 0;infiles[n]!=null;n++)
 		{
-			System.out.println(infiles[n]+"\t"+"...writing...");
+			System.out.println(infiles[n]+"\t"+"writing...");
 			XSSFSheet sheet;
 			if(sheet_name != null && sheetNameArr[n] != null)
 			{
