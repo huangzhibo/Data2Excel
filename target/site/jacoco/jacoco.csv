@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Data2Excel,cn.genomics.datatools,ReadXLSX,155,0,15,0,32,0,12,0,3,0
+Data2Excel,cn.genomics.datatools,ReadText,291,0,22,0,73,0,15,0,4,0
+Data2Excel,cn.genomics.datatools,ReadXLS,155,0,15,0,32,0,12,0,3,0
+Data2Excel,cn.genomics.datatools,Data2Excel,1077,28,117,3,207,7,72,3,9,2
+Data2Excel,cn.genomics.datatools,Vcf2Excel,85,0,2,0,13,0,4,0,3,0
+Data2Excel,cn.genomics.datatools,GlobleDefined,11,5,0,0,5,2,3,2,3,2
