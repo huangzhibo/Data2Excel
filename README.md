@@ -1,3 +1,4 @@
+[![Code Climate](https://codeclimate.com/github/huangzhibo/Data2Excel/badges/gpa.svg)](https://codeclimate.com/github/huangzhibo/Data2Excel)
 [![Build Status](https://travis-ci.org/huangzhibo/Data2Excel.svg?branch=master)](https://travis-ci.org/huangzhibo/Data2Excel)
 [![Coverage Status](https://coveralls.io/repos/github/huangzhibo/Data2Excel/badge.svg?branch=master)](https://coveralls.io/github/huangzhibo/Data2Excel?branch=master)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/huangzhibo/Data2Excel)
