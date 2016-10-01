@@ -104,8 +104,8 @@
 				</descriptorRefs>  
             </configuration>
          </plugin>
-		<plugin>
-			<groupId>org.eluder.coveralls</groupId>
+		<!-- <plugin>
+		<groupId>org.eluder.coveralls</groupId>
 			<artifactId>coveralls-maven-plugin</artifactId>
 			<version>4.3.0</version>
 			<configuration>
@@ -119,7 +119,7 @@
    			 <configuration>
         			<format>xml</format>
         			<maxmem>256m</maxmem>
-       				 <!-- aggregated reports for multi-module projects -->
+       				 aggregated reports for multi-module projects
         			<aggregate>true</aggregate>
    		 	 </configuration>
 		</plugin>
@@ -141,7 +141,7 @@
 					</goals>
 				</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 	  </plugins>
      </build>
 </project>
