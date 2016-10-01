@@ -1,11 +1,15 @@
-# Data2Excel
+# Description
 Transfer plain text data to Excel (Java code)  
 
 Data2Excel version 0.4  
 Author: huangzhibo@genomics.cn  
 Update: 2016-10-1  
-Note  : Tools for transform plain text file into Excelfile(.xlsx)    
+Note  : Tools for transform plain text file into Excelfile(.xlsx)
 
+# Building
+- mvn assembly:assembly
+
+# Usage
 Usage : java -jar Data2Excel.jar \<options...\>  
 
 	-i, --infile      	<File>  	Input plain text files. Support multiple files input(example："-i file1 -i file2"). [required]
