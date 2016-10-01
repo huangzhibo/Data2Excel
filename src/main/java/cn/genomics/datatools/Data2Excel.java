@@ -264,8 +264,8 @@ public class Data2Excel {
 		int n = 0, col_num = 0;
 		ReadText myData = new ReadText();		
 		Iterator<String[]> i = myData.readDataToLineArray(infile);
-		Map <String,int[]> format = new HashMap <String,int[]>();
-		if(formatfile != null) format = myData.readFormatSet(formatfile);
+//		Map <String,int[]> format = new HashMap <String,int[]>();
+//		if(formatfile != null) format = myData.readFormatSet(formatfile);
 		String[] header = new String[myData.max_col];
 		boolean hasHeader = false;
 
