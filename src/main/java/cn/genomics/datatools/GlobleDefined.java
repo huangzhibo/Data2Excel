@@ -1,4 +1,4 @@
-package cn.genomics.bgitools.exceltrans;
+package cn.genomics.datatools;
 
 public class GlobleDefined {
 	private static final int MAX_COLUMN = 200;

@@ -1,4 +1,4 @@
-package cn.genomics.bgitools.exceltrans;
+package cn.genomics.datatools;
 
 import htsjdk.samtools.util.CloseableIterator;
 import htsjdk.variant.variantcontext.VariantContext;

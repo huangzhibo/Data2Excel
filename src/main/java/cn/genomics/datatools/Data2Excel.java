@@ -1,4 +1,4 @@
-package cn.genomics.bgitools.exceltrans;
+package cn.genomics.datatools;
 
 import gnu.getopt.Getopt;
 import gnu.getopt.LongOpt;
