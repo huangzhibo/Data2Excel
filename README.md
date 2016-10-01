@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/huangzhibo/Data2Excel.svg?branch=master)](https://travis-ci.org/huangzhibo/Data2Excel)
 [![Coverage Status](https://coveralls.io/repos/github/huangzhibo/Data2Excel/badge.svg?branch=master)](https://coveralls.io/github/huangzhibo/Data2Excel?branch=master)
-[![codecov.io](https://codecov.io/github/huangzhibo/Data2Excel/coverage.svg?branch=master)](https://codecov.io/github/huangzhibo/Data2Excel?branch=master)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/huangzhibo/Data2Excel)
 [![Language](http://img.shields.io/badge/language-java-brightgreen.svg)](https://www.java.com/)
 # Description
