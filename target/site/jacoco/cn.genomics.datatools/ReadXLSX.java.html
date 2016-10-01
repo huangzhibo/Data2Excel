@@ -42,23 +42,23 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
     		{
 <span class="nc bnc" id="L43" title="All 5 branches missed.">    	        switch (cell.getCellType()) {                                                       </span>
     	            case Cell.CELL_TYPE_STRING:                                                     
-<span class="nc" id="L45">    	                System.out.print(cell.getRichStringCellValue().getString().trim()+&quot;\t&quot;);              </span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">    	                System.out.print(cell.getRichStringCellValue().getString().trim()+&quot;\t&quot;);              </span>
 <span class="nc" id="L46">    	                break;                                                                      </span>
     	            case Cell.CELL_TYPE_NUMERIC:                                                    
-<span class="nc bnc" id="L48" title="All 2 branches missed.">    	                if (DateUtil.isCellDateFormatted(cell)) {                                   </span>
+<span class="nc bnc" id="L48" title="All 4 branches missed.">    	                if (DateUtil.isCellDateFormatted(cell)) {                                   </span>
 <span class="nc" id="L49">    	                    System.out.print(cell.getDateCellValue()+&quot;\t&quot;);                            </span>
     	                } else {                                                                    
 <span class="nc" id="L51">    	                    System.out.print(cell.getNumericCellValue()+&quot;\t&quot;);                         </span>
     	                }                                                                           
 <span class="nc" id="L53">    	                break;                                                                      </span>
     	            case Cell.CELL_TYPE_BOOLEAN:                                                    
-<span class="nc" id="L55">    	                System.out.print(cell.getBooleanCellValue()+&quot;\t&quot;);                             </span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">    	                System.out.print(cell.getBooleanCellValue()+&quot;\t&quot;);                             </span>
 <span class="nc" id="L56">    	                break;                                                                      </span>
     	            case Cell.CELL_TYPE_FORMULA:                                                    
-<span class="nc" id="L58">    	                System.out.print(cell.getCellFormula()+&quot;\t&quot;);                                  </span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">    	                System.out.print(cell.getCellFormula()+&quot;\t&quot;);                                  </span>
 <span class="nc" id="L59">    	                break;                                                                      </span>
     	            default:                                                                        
-<span class="nc" id="L61">    	                System.out.print(&quot;null&quot;);                                                       </span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">    	                System.out.print(&quot;null&quot;);                                                       </span>
     	        }                                                                                   
     			
 <span class="nc" id="L64">    		}</span>
