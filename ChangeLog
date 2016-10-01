@@ -1,0 +1,12 @@
+For release 0.1 (2015/06/10)
+- 将一个tab分割的文本文件转换为Excel
+
+For release 0.1 (2015/07/12)
+- 支持输入多个文本文件，分别输出到Excel的不同sheet
+- 增加-f,--format参数，指定定义Excel输出格式的文件（定义行列的折叠属性和单元格宽度）
+- 增加-c,--no_color参数, 取消行背景色的显示
+
+For release 0.3 (2015/07/16)
+- 增加-F,--split参数，定义文本文件的分隔符
+- 增加-p,--print_sheet参数，当输入为Excel文件时，指定一个sheet将其内容打印至标准输出
+- Github release 一个稳定版本
