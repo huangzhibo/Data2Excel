@@ -4,12 +4,10 @@
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/huangzhibo/Data2Excel)
 [![Language](http://img.shields.io/badge/language-java-brightgreen.svg)](https://www.java.com/)
 # Description
-Transfer plain text data to Excel (Java code)  
-
 Data2Excel version 0.4  
 Author: huangzhibo@genomics.cn  
-Update: 2016-10-1  
-Note  : Tools for transform plain text file into Excelfile(.xlsx)
+Update: 2016-10-01  
+Note  : transform plain text data to Excel (.xlsx)
 
 # Building
 - mvn assembly:assembly
