@@ -17,7 +17,7 @@ public class ReadText {
 	
 	int max_line = 0;
 	int max_col = 0; 
-	int min_col = GlobleDefined.getMaxColumn();
+	int min_col = 200;
 
 	public Iterator<String> readDataToLineStr(String filename) {
 		List<String> data = new ArrayList<String>();
