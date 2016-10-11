@@ -26,19 +26,17 @@ public class Data2Excel {
 			IOException {
 		
 		parameter = new Parameter(args);
+		int in_excel = -2;
 
-		 int in_excel = -2;
-    	 String outfile = null, sheet_name = null;
-    	 String[] infiles = new String[20];
 		 
-		if(infiles[0].endsWith(".xlsx") || infiles[0].endsWith(".xlsm"))
+		if(parameter.getFirstInfile().endsWith(".xlsx") || parameter.getInfiles()[0].endsWith(".xlsm"))
 		{
 			ReadXLSX excelfile = new ReadXLSX();
-			excelfile.readExcel(new FileInputStream(new File(infiles[0])),parameter.getSheetIndexToPrint());
+			excelfile.readExcel(new FileInputStream(new File(parameter.getFirstInfile())),parameter.getSheetIndexToPrint());
 			System.exit(0);			
-		}else if(infiles[0].endsWith(".xls")){
+		}else if(parameter.getFirstInfile().endsWith(".xls")){
 			ReadXLS xlsfile = new ReadXLS();
-			xlsfile.readExcel(new FileInputStream(new File(infiles[0])),parameter.getSheetIndexToPrint());
+			xlsfile.readExcel(new FileInputStream(new File(parameter.getFirstInfile())),parameter.getSheetIndexToPrint());
 			System.exit(0);
 		}
 		
@@ -55,32 +53,25 @@ public class Data2Excel {
 		CellStyle headerStyle = wb.createCellStyle();
 		headerStyle.setFont(headerFont);
 		
-		//set sheet name
-		String[] sheetNameArr = new String[20];
-		if(parameter.getSheetName() != null)
+		for(int n = 0; n < parameter.getInfiles().length; n++)
 		{
-			sheetNameArr = parameter.getSheetName().split(",");
-		}
-		
-		for(int n = 0;infiles[n]!=null;n++)
-		{
-			System.out.println(infiles[n]+"\t"+"writing...");
+			System.out.println(parameter.getInfiles()[n]+"\t"+"writing...");
 			XSSFSheet sheet;
-			if(sheet_name != null && sheetNameArr[n] != null)
+			if(parameter.getSheetNames() != null && parameter.getSheetNames()[n] != null)
 			{
-				sheet = wb.createSheet(sheetNameArr[n]);		
+				sheet = wb.createSheet(parameter.getSheetNames()[n]);		
 			}else
 			{
 				sheet = wb.createSheet();
 			}
 //			sheet.setDefaultRowHeight((short)(1.2*256));
 			if(in_excel == -2)
-				writeToSheet(sheet,infiles[n],headerStyle, textStyle);
-			else if(-1 == writeToSheet(sheet,infiles[n],headerStyle, textStyle,in_excel))
-				writeToSheet(sheet,infiles[n],headerStyle, textStyle);
+				writeToSheet(sheet,parameter.getInfiles()[n],headerStyle, textStyle);
+			else if(-1 == writeToSheet(sheet,parameter.getInfiles()[n],headerStyle, textStyle,in_excel))
+				writeToSheet(sheet,parameter.getInfiles()[n],headerStyle, textStyle);
 			
 		}
-		FileOutputStream fileOut = new FileOutputStream(outfile);
+		FileOutputStream fileOut = new FileOutputStream(parameter.getOutfile());
 		wb.write(fileOut);
 		wb.close();
 		fileOut.close();
@@ -294,7 +285,5 @@ public class Data2Excel {
 		return 0;
 		
 	}
-	
-	
 
 }

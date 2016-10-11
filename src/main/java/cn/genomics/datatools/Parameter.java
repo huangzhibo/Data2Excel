@@ -17,7 +17,7 @@ public class Parameter {
 	private String filedSplitChar = "\t";
 	private String[] infiles;
 	private String outfile = null;
-	private String sheetName = null;
+	private String[] sheetNames = null;
 	private int sheetIndexToPrint = -1;
 	private boolean noColor = false;
 	private String formatFile = null;
@@ -53,7 +53,7 @@ public class Parameter {
 				.required(true)
 				.hasArg()
 				.argName("FILE")
-				.desc("Input plain text files. Support multiple files input(example：\"-i file1 -i file2\"")
+				.desc("Input plain text files. Support multiple files input(example：\"-i file1 -i file2\")")
 			    .build());
 		options.addOption(Option.builder("o")
 				.longOpt("output")
@@ -116,7 +116,9 @@ public class Parameter {
 		}
 		
 		if(cmdLine.hasOption("sheet_name")){
-			sheetName = cmdLine.getOptionValue("sheet_name");
+			String sheetName = cmdLine.getOptionValue("sheet_name");
+			if(!sheetName.isEmpty())
+				sheetNames = sheetName.split(",");
 		}
 		
 		if(cmdLine.hasOption("no_color")){
@@ -142,6 +144,10 @@ public class Parameter {
 
 	public void setInfiles(String[] infiles) {
 		this.infiles = infiles;
+	}
+	
+	public String getFirstInfile() {
+		return infiles[0];
 	}
 
 	public String getOutfile() {
@@ -170,12 +176,12 @@ public class Parameter {
 		this.filedSplitChar = filedSplitChar;
 	}
 
-	public String getSheetName() {
-		return sheetName;
+	public String[] getSheetNames() {
+		return sheetNames;
 	}
 
-	public void setSheetName(String sheetName) {
-		this.sheetName = sheetName;
+	public void setSheetNames(String[] sheetNames) {
+		this.sheetNames = sheetNames;
 	}
 
 	public boolean isNoColor() {
