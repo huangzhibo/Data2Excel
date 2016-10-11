@@ -2,124 +2,210 @@ package cn.genomics.datatools;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.ParseException;
 
-
-public abstract class Parameter {
-	protected Options options = new Options();
-	protected CommandLine cmdLine;
-	protected CommandLineParser parser = new DefaultParser();
-	protected HelpFormatter helpInfo = new HelpFormatter();
-
-
-	/**
-	 * help info must use it before parse.
-	 */
-	public void FormatHelpInfo(String softwareName, String version) {
-		StringBuilder sb = new StringBuilder();
-		if (softwareName != null) {
-			sb.append("Software name: ");
-			sb.append(softwareName);
-		}
-		sb.append("\nVersion: ");
-		sb.append(version);
-		sb.append("\nLast update: 2015.02.19\n");
-		sb.append("Developed by: Bioinformatics core technology laboratory | Science and Technology Division | BGI-shenzhen\n");
-		sb.append("Authors: Li ShengKang & Zhang Yong\n");
-		sb.append("E-mail: zhangyong2@genomics.org.cn or lishengkang@genomics.cn\n");
-		sb.append("Copyright(c) 2015: BGI. All Rights Reserved.\n\n");
-		helpInfo.setNewLine("\n");
-		if(softwareName == null)
-			softwareName = "tools_name";
-		helpInfo.setSyntaxPrefix("hadoop jar " + "gaea.jar " + softwareName
-				+ " [options]\n" + sb.toString() + "\n");
-		helpInfo.setWidth(2 * HelpFormatter.DEFAULT_WIDTH);
-	}
-
-	protected void printHelpInfotmation(String softwareName) {
-		helpInfo.printHelp(softwareName + " options list:", options);
-	}
+public class Parameter {
+	
+	final String SOFTWARE_NAME= "Data2Excel";
+	final String SOFTWARE_VERSION_NUMBER = "0.4";
+	final String LAST_UPDATE = "2016-10-11";
+	
+	private String filedSplitChar = "\t";
+	private String[] infiles;
+	private String outfile = null;
+	private String sheetName = null;
+	private int sheetIndexToPrint = -1;
+	private boolean noColor = false;
+	private String formatFile = null;
+	
+	Options options = new Options();
+	CommandLine cmdLine;
+	CommandLineParser parser = new DefaultParser();
+	
+	public Parameter(){}
 	
 	public Parameter(String[] args) {
 		parse(args);
 	}
 	
-	
-	private static void usage() {
-		System.out.println();
-		System.out.println("Data2Excel version 0.3");
-		System.out.println("Author: huangzhibo@genomics.cn");
-		System.out.println("Date  : 2015-7-16");
-		System.out.println("Note  : Tools for transform plain text file into Excelfile(.xlsx)");
-		System.out.println();
-		System.out.println("Usage : java -jar Data2Excel_v0.3.jar <options...>");
-		System.out.println("\t-i, --infile      \t<File>  \tInput plain text files. Support multiple files input(example：\"-i file1 -i file2\"). [required]");
-		System.out.println("\t-o, --outfile     \t<File>  \tOutput Excel file, multi input will be writed into different sheets in the same workbook. [file1.xlsx]");
-		System.out.println("\t-f, --format      \t<File>  \tThe format file to set sheet column style. [not using]");
-		System.out.println("\t-s, --sheet_name  \t<String>\tTo set sheet name. When have more than one files, you need use it as \"-s name1,name2\". [not using]");
-		System.out.println("\t-F, --split       \t<String>\tSplit char. (example: ' -F \"\\t\" ') [\\t]");
-		System.out.println("\t-c, --no_color    \t        \tTo close the color display in the output file. [not using]");
-		System.out.println("\t-e, --in_excel_col\t<int>   \tIn_Excel column index (0-base). Use it without argument will check 'In_Excel' in header line. [not using]");
-		System.out.println("\t-p, --print_sheet \t<int>   \tThe index(0-base) of Sheet to print. Be effective when the input is excel file. [print sheet name]");
-		System.out.println("\t-h, --help        \t        \tPrint this help.");
-		System.out.println();
-		System.exit(0);
+	private String helpHeader() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\nVersion    : ");
+		sb.append(SOFTWARE_VERSION_NUMBER);
+		sb.append("\nAuthor     : huangzhibo@genomics.cn");
+		sb.append("\nLast update: ");
+		sb.append(LAST_UPDATE);
+		sb.append("\nNote       : Read data from plain text file and write it into Excel\n");
+		sb.append("\nOptions:\n");
+		return sb.toString();
 	}
 	
-
-	
 	public void parse(String[] args) {
+		String header = helpHeader();
+		String footer = "\nPlease report issues at https://github.com/huangzhibo/Data2Excel/issues";
 		
-		addOption("i", "input",      true,  "Input plain text files. Support multiple files input(example：\"-i file1 -i file2\"", true);
-		addOption("o", "output",     true,  "Output Excel file, multi input will be writed into different sheets in the same workbook. [file1.xlsx]", true);
-		addOption("s", "sheet_name", true,  "To set sheet name. When have more than one files, you need use it as \"-s name1,name2\". [not using]", true);
-		addOption("c", "no_color",   true,  "config file.", true);
-		addOption("F", "field_split",  true,  "The field split char in one line [\t]", true);
-		addOption("f", "format", 	 true,  "The format file to set sheet column style.");
-		addOption("p", "print_sheet", 	 true,  "The index(0-base) of Sheet to print. Be effective when the input is excel file. [print sheet name]");
-		addOption(null,"verbose",    false, "display verbose information.");
-		addOption(null,"debug",      false, "for debug.");
-		addOption("h", "help",       false, "help information.");
-		FormatHelpInfo("GaeaAnnotator", "0.0.1-SNAPSHOT");
+		options.addOption(Option.builder("i")
+				.longOpt("input")
+				.required(true)
+				.hasArg()
+				.argName("FILE")
+				.desc("Input plain text files. Support multiple files input(example：\"-i file1 -i file2\"")
+			    .build());
+		options.addOption(Option.builder("o")
+				.longOpt("output")
+				.hasArg()
+				.argName("FILE")
+				.desc("Output Excel file, multi input will be writed into different sheets in the same workbook. [file1.xlsx]")
+				.build());
+		options.addOption(Option.builder("s")
+				.longOpt("sheet_name")
+				.hasArg()
+				.argName("String")
+				.desc("To set sheet name. When have more than one files, you need use it as \"-s name1,name2\". [not using]")
+				.build());
+		options.addOption(Option.builder("c")
+				.longOpt("no_color")
+				.desc("To close the color display in the output file. [not using]")
+				.build());
+		options.addOption(Option.builder("h")
+				.longOpt("help")
+				.desc("Print this help.")
+				.build());
+		options.addOption(Option.builder("F")
+				.longOpt("field_split")
+				.hasArg()
+				.argName("String")
+				.desc("The field split char in one line [\\t]")
+				.build());
+		options.addOption(Option.builder("f")
+				.longOpt("format")
+				.hasArg()
+				.argName("FILE")
+				.desc("The format file to set sheet column style.")
+				.build());
+		options.addOption(Option.builder("p")
+				.longOpt("print_sheet")
+				.hasArg()
+				.argName("INT")
+				.desc("The index(0-base) of Sheet to print. Be effective when the input is excel file. [print sheet name]")
+				.build());
+		
+		
+		HelpFormatter formatter = new HelpFormatter();
+		formatter.setWidth(2 * HelpFormatter.DEFAULT_WIDTH);
 		
 		try {
 			cmdLine = parser.parse(options, args);
 			if(cmdLine.hasOption("h")) { 
-				helpInfo.printHelp("test", options);
+				formatter.printHelp("java -jar Data2Excel.jar", header, options, footer, true);
 				System.exit(0);
 			}
 		} catch (ParseException e) {
-			helpInfo.printHelp("Options:", options, true);
+			formatter.printHelp("java -jar Data2Excel.jar", header, options, footer, true);
 			System.exit(0);
 		}
-
+		
+		infiles = cmdLine.getOptionValues("input");
+		
+		if(cmdLine.hasOption("output")){
+			outfile = cmdLine.getOptionValue("output");
+		}
+		
+		if(cmdLine.hasOption("sheet_name")){
+			sheetName = cmdLine.getOptionValue("sheet_name");
+		}
+		
+		if(cmdLine.hasOption("no_color")){
+			noColor = true;
+		}
+		
+		if(cmdLine.hasOption("field_split")){
+			filedSplitChar = cmdLine.getOptionValue("field_split");
+		}
+		
+		if(cmdLine.hasOption("format")){
+			formatFile = cmdLine.getOptionValue("format");
+		}
+		
+		if(cmdLine.hasOption("print_sheet")){
+			sheetIndexToPrint = Integer.parseInt(cmdLine.getOptionValue("print_sheet"));
+		}
 	}
-	
+
+	public String[] getInfiles() {
+		return infiles;
+	}
+
+	public void setInfiles(String[] infiles) {
+		this.infiles = infiles;
+	}
+
+	public String getOutfile() {
+		if(outfile == null)  outfile = infiles[0]+".xlsx";
+		else if(!outfile.endsWith(".xlsx"))	 outfile = outfile+".xlsx";
+		return outfile;
+	}
+
+	public void setOutfile(String outfile) {
+		this.outfile = outfile;
+	}
+
+	public int getSheetIndexToPrint() {
+		return sheetIndexToPrint;
+	}
+
+	public void setSheetIndexToPrint(int sheetIndexToPrint) {
+		this.sheetIndexToPrint = sheetIndexToPrint;
+	}
+
+	public String getFiledSplitChar() {
+		return filedSplitChar;
+	}
+
+	public void setFiledSplitChar(String filedSplitChar) {
+		this.filedSplitChar = filedSplitChar;
+	}
+
+	public String getSheetName() {
+		return sheetName;
+	}
+
+	public void setSheetName(String sheetName) {
+		this.sheetName = sheetName;
+	}
+
+	public boolean isNoColor() {
+		return noColor;
+	}
+
+	public void setNoColor(boolean noColor) {
+		this.noColor = noColor;
+	}
+
+	public String getFormatFile() {
+		return formatFile;
+	}
+
+	public void setFormatFile(String formatFile) {
+		this.formatFile = formatFile;
+	}
+
 	/**
-	 * add normal option.
+	 * 测试
 	 * 
-	 * @param opt
-	 * @param longOpt
-	 * @param hasArg
-	 * @param description
+	 * @param args
+	 * @throws Exception
 	 */
-	protected void addOption(String opt, String longOpt, boolean hasArg,
-			String description) {
-		addOption(opt, longOpt, hasArg, description, false);
+	public static void main(String[] args) throws Exception {
+		String[] arg = {  "-i", "test.txt" , "-i", "test2.txt"};
+		Parameter parameter = new Parameter();
+		parameter.parse(arg);
+		for (String file : parameter.getInfiles()) {
+			System.out.println(file);
+		}
 	}
-	
-	/**
-	 * add required option
-	 */
-	protected void addOption(String opt, String longOpt, boolean hasArg,
-			String description, boolean required) {
-		Option option = new Option(opt, longOpt, hasArg, description);
-		option.setRequired(required);
-		options.addOption(option);
-	}
-
 }
