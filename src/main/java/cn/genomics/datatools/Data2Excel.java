@@ -1,28 +1,23 @@
 package cn.genomics.datatools;
 
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.*;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 public class Data2Excel {
 	
-	public static Parameter parameter;
+	private static Parameter parameter;
 
-	public static void main(String[] args) throws FileNotFoundException,
+	public static void main(String[] args) throws
 			IOException {
 		
 		parameter = new Parameter(args);
@@ -65,7 +60,7 @@ public class Data2Excel {
 				sheet = wb.createSheet();
 			}
 //			sheet.setDefaultRowHeight((short)(1.2*256));
-			if(in_excel == -2)
+			if(in_excel == -2)  //fixme
 				writeToSheet(sheet,parameter.getInfiles()[n],headerStyle, textStyle);
 			else if(-1 == writeToSheet(sheet,parameter.getInfiles()[n],headerStyle, textStyle,in_excel))
 				writeToSheet(sheet,parameter.getInfiles()[n],headerStyle, textStyle);
@@ -77,17 +72,17 @@ public class Data2Excel {
 		fileOut.close();
 	}
 	
-	public static int checkInExcel(String[] strArray)
+	static int checkInExcel(String[] strArray)
 	{
 		for (int j = 0; j < strArray.length; j++) {
-			strArray[j].trim();
+			strArray[j] = strArray[j].trim();
 			if(strArray[j].compareTo("InExcel") == 0)
 				return j;
 		}
 		return -1;
 	}
 
-	public static void outLine2Row(String[] strArr, XSSFRow row) {
+	private static void outLine2Row(String[] strArr, XSSFRow row) {
 		for (int j = 0; j < strArr.length; j++) {
 
 			XSSFCell cell = row.createCell(j);
@@ -96,7 +91,7 @@ public class Data2Excel {
 		}
 		
 	}
-	public static void outLine2Row(String[] strArr, XSSFRow row, CellStyle style) {
+	private static void outLine2Row(String[] strArr, XSSFRow row, CellStyle style) {
 		for (int j = 0; j < strArr.length; j++) {
 			
 			XSSFCell cell = row.createCell(j);
@@ -106,7 +101,7 @@ public class Data2Excel {
 		}
 	}
 	
-	public static void deleteArrElement(String[] strArray,String[] strArr, int index) {
+	private static void deleteArrElement(String[] strArray, String[] strArr, int index) {
 		int len = strArray.length,n=0;
 		for (int i = 0; i < len; i++) {
 			if(i == index) continue;
@@ -114,9 +109,9 @@ public class Data2Excel {
 		}
 	}
 
-	public static void setColumnFormat(XSSFSheet sheet, String[] header, ReadText myData)
+	private static void setColumnFormat(XSSFSheet sheet, String[] header, ReadText myData)
 	{
-		Map <String,int[]> format = new HashMap <String,int[]>(); 
+		Map <String,int[]> format = new HashMap<>();
 		if(parameter.getFormatFile() != null) format = myData.readFormatSet(parameter.getFormatFile());
 		short[] groupRegionList = new short[100];
 		short[] groupRegion = new short[]{-1,-1};
@@ -183,8 +178,8 @@ public class Data2Excel {
 		}
 	}
 	
-	public static void writeToSheet(XSSFSheet sheet, String infile, CellStyle headerStyle, CellStyle textStyle){
-		int n = 0, col_num = 0;
+	private static void writeToSheet(XSSFSheet sheet, String infile, CellStyle headerStyle, CellStyle textStyle){
+		int n = 0, col_num;
 		ReadText myData = new ReadText();		
 		Iterator<String[]> i = myData.readDataToLineArray(infile);
 //		Map <String,int[]> format = new HashMap <String,int[]>();
@@ -197,7 +192,7 @@ public class Data2Excel {
 			String[] lineArr = i.next();
 			if (lineArr[0].startsWith("##")) continue;			
 			col_num = lineArr.length;
-			XSSFRow row = null;
+			XSSFRow row;
 			
 			if( col_num == 1)
 			{
@@ -228,7 +223,7 @@ public class Data2Excel {
 		
 	}
 	
-	public static int writeToSheet(XSSFSheet sheet, String infile, CellStyle headerStyle, CellStyle textStyle, int in_excel){
+	private static int writeToSheet(XSSFSheet sheet, String infile, CellStyle headerStyle, CellStyle textStyle, int in_excel){
 		int n = 0;
 		ReadText myData = new ReadText();		
 		Iterator<String[]> i = myData.readDataToLineArray(infile);
@@ -239,7 +234,7 @@ public class Data2Excel {
 			String[] lineArr = i.next();
 			if (lineArr[0].startsWith("##")) continue;			
 			String[] strArr = new String[lineArr.length-1];
-			XSSFRow row = null;
+			XSSFRow row;
 			
 			if (lineArr[0].startsWith("#")) {
 				if(in_excel == -1 )
