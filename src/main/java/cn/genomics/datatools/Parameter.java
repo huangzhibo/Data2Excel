@@ -8,18 +8,21 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+
 public class Parameter {
-	
-	final String SOFTWARE_NAME= "Data2Excel";
-	final String SOFTWARE_VERSION_NUMBER = "0.4";
-	final String LAST_UPDATE = "2016-10-11";
-	
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+	String compile_date = df.format(new Date());
+
 	private String filedSplitChar = "\t";
 	private String[] infiles;
 	private String outfile = null;
 	private String[] sheetNames = null;
 	private int sheetIndexToPrint = -1;
-	private boolean noColor = false;
+	private boolean rowColor = false;
 	private String formatFile = null;
 	
 	Options options = new Options();
@@ -34,12 +37,12 @@ public class Parameter {
 	
 	private String helpHeader() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\nVersion    : ");
-		sb.append(SOFTWARE_VERSION_NUMBER);
-		sb.append("\nAuthor     : huangzhibo@genomics.cn");
-		sb.append("\nLast update: ");
-		sb.append(LAST_UPDATE);
-		sb.append("\nNote       : Read data from plain text file and write it into Excel\n");
+		sb.append("\nVersion     : ");
+		sb.append(getAppVersion());
+		sb.append("\nAuthor      : huangzhibo@genomics.cn");
+		sb.append("\nCompile Date: ");
+		sb.append(compile_date);
+		sb.append("\nNote        : Read data from plain text file and write it into Excel\n");
 		sb.append("\nOptions:\n");
 		return sb.toString();
 	}
@@ -68,8 +71,8 @@ public class Parameter {
 				.desc("To set sheet name. When have more than one files, you need use it as \"-s name1,name2\". [not using]")
 				.build());
 		options.addOption(Option.builder("c")
-				.longOpt("no_color")
-				.desc("To close the color display in the output file. [not using]")
+				.longOpt("color")
+				.desc("To open the color display in the output file. [not using]")
 				.build());
 		options.addOption(Option.builder("h")
 				.longOpt("help")
@@ -121,8 +124,8 @@ public class Parameter {
 				sheetNames = sheetName.split(",");
 		}
 		
-		if(cmdLine.hasOption("no_color")){
-			noColor = true;
+		if(cmdLine.hasOption("color")){
+			rowColor = true;
 		}
 		
 		if(cmdLine.hasOption("field_split")){
@@ -136,6 +139,20 @@ public class Parameter {
 		if(cmdLine.hasOption("print_sheet")){
 			sheetIndexToPrint = Integer.parseInt(cmdLine.getOptionValue("print_sheet"));
 		}
+	}
+
+	public String getAppVersion() {
+		String appVersion = "NA";
+		Properties properties = new Properties();
+		try {
+			properties.load(Options.class.getClassLoader().getResourceAsStream("app.properties"));
+			if (!properties.isEmpty()) {
+				appVersion = properties.getProperty("app.version");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return appVersion;
 	}
 
 	public String[] getInfiles() {
@@ -184,12 +201,8 @@ public class Parameter {
 		this.sheetNames = sheetNames;
 	}
 
-	public boolean isNoColor() {
-		return noColor;
-	}
-
-	public void setNoColor(boolean noColor) {
-		this.noColor = noColor;
+	public boolean isRowColor() {
+		return rowColor;
 	}
 
 	public String getFormatFile() {
