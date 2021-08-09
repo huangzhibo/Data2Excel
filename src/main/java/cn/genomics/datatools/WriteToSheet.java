@@ -116,7 +116,7 @@ public class WriteToSheet {
         for (int j = 0; j < strArr.length; j++) {
             Cell cell = row.createCell(j);
             cell.setCellStyle(style);
-            if(myColumnFormats.get(j) != null){
+            if(!myColumnFormats.isEmpty() && myColumnFormats.get(j) != null){
                 String valueType = myColumnFormats.get(j).getValueType();
                 if(valueType.equals("INT") || valueType.equals("LONG")){
                     cell.setCellValue(Long.parseLong(strArr[j].trim()));
