@@ -1,12 +1,10 @@
 [![Code Climate](https://codeclimate.com/github/huangzhibo/Data2Excel/badges/gpa.svg)](https://codeclimate.com/github/huangzhibo/Data2Excel)
 [![Build Status](https://travis-ci.org/huangzhibo/Data2Excel.svg?branch=master)](https://travis-ci.org/huangzhibo/Data2Excel)
-[![Coverage Status](https://coveralls.io/repos/github/huangzhibo/Data2Excel/badge.svg?branch=master)](https://coveralls.io/github/huangzhibo/Data2Excel?branch=master)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/huangzhibo/Data2Excel)
 [![Language](http://img.shields.io/badge/language-java-brightgreen.svg)](https://www.java.com/)
 # Description
-Data2Excel version 0.4  
+Data2Excel version 0.5  
 Author: huangzhibo@genomics.cn  
-Update: 2016-10-01  
 Note  : transform plain text data to Excel (.xlsx)
 
 # Building
@@ -14,6 +12,7 @@ Note  : transform plain text data to Excel (.xlsx)
 
 # Usage
 usage: java -jar Data2Excel.jar [-c] [-F <String>] [-f <FILE>] [-h] -i <FILE> [-o <FILE>] [-p <INT>] [-s <String>]
+
 
     -c,--color                  To open the color display in the output file. [not using]
     -F,--field_split <String>   The field split char in one line [\t]
